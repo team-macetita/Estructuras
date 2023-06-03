@@ -1,0 +1,50 @@
+digraph T{
+	node[shape=box fontname="Arial" fillcolor="white" style=filled];
+	Root[label = "Capa 0", group="0"];
+	F0[group="0" fillcolor="plum"];
+	F1[group="0" fillcolor="plum"];
+	F2[group="0" fillcolor="plum"];
+	C1[group=1 fillcolor="powderblue"];
+	C2[group=2 fillcolor="powderblue"];
+	C3[group=3 fillcolor="powderblue"];
+	N0_1[group=1 label=5];
+	N1_1[group=1 label=5];
+	N1_2[group=2 label=5];
+	N2_3[group=3 label=5];
+	subgraph columnHeader {
+		rank = same;
+		Root -> C1 -> C2 -> C3;
+		Root -> C1 -> C2 -> C3[dir=back];
+	}
+	subgraph row0 {
+		rank = same;
+		F0 -> N0_1;
+		F0 -> N0_1[dir=back];
+	}
+	subgraph row1 {
+		rank = same;
+		F1 -> N1_1 -> N1_2;
+		F1 -> N1_1 -> N1_2[dir=back];
+	}
+	subgraph row2 {
+		rank = same;
+		F2 -> N2_3;
+		F2 -> N2_3[dir=back];
+	}
+	subgraph rowHeader {
+		Root -> F0 -> F1 -> F2;
+		Root -> F0 -> F1 -> F2[dir=back];
+	}
+	subgraph column1 {
+		C1 -> N0_1 -> N1_1;
+		C1 -> N0_1 -> N1_1[dir=back];
+	}
+	subgraph column2 {
+		C2 -> N1_2;
+		C2 -> N1_2[dir=back];
+	}
+	subgraph column3 {
+		C3 -> N2_3;
+		C3 -> N2_3[dir=back];
+	}
+}

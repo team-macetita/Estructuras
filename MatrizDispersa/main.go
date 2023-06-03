@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 )
 
@@ -177,6 +178,129 @@ func (nodo *MatrizDispersa) imprimir() {
 	}
 }
 
+func (nodo *MatrizDispersa) dot() string {
+	dot := "digraph T{\n\tnode[shape=box fontname=\"Arial\" fillcolor=\"white\" style=filled];"
+	dot += "\n\tRoot[label = \"Capa 0\", group=\"0\"];"
+
+	actualF := nodo.accesoF.primero
+	for actualF != nil {
+		dot += "\n\tF" + strconv.Itoa(actualF.indice) + "[group=\"0\" fillcolor=\"plum\"];"
+		actualF = actualF.siguiente
+	}
+
+	actualC := nodo.accesoC.primero
+	for actualC != nil {
+		dot += "\n\tC" + strconv.Itoa(actualC.indice) + "[group=" + strconv.Itoa(actualC.indice) + " fillcolor=\"powderblue\"];"
+		actualC = actualC.siguiente
+	}
+
+	actualC = nodo.accesoC.primero
+	for actualC != nil {
+		actualF := actualC.acceso
+		for actualF != nil {
+			dot += "\n\tN" + strconv.Itoa(actualF.fila) + "_" + strconv.Itoa(actualF.columna) + "[group=" + strconv.Itoa(actualF.columna) + " label=" + strconv.Itoa(actualF.numero) + "];"
+			actualF = actualF.abajo
+		}
+		actualC = actualC.siguiente
+	}
+
+	dot += "\n\tsubgraph columnHeader {\n\t\trank = same;"
+	enlace := "\n\t\tRoot -> "
+	actualC = nodo.accesoC.primero
+	for actualC != nil {
+		enlace += "C" + strconv.Itoa(actualC.indice)
+		actualC = actualC.siguiente
+		if actualC != nil {
+			enlace += " -> "
+		}
+	}
+	dot += enlace + ";" + enlace + "[dir=back];\n\t}"
+
+	actualF = nodo.accesoF.primero
+	for actualF != nil {
+		dot += "\n\tsubgraph row" + strconv.Itoa(actualF.indice) + " {\n\t\trank = same;"
+		enlace := "\n\t\tF" + strconv.Itoa(actualF.indice) + " -> "
+		actualC := actualF.acceso
+		for actualC != nil {
+			enlace += "N" + strconv.Itoa(actualC.fila) + "_" + strconv.Itoa(actualC.columna)
+			if actualC.derecha != nil {
+				actualC = actualC.derecha
+			} else {
+				break
+			}
+			if actualC != nil {
+				enlace += " -> "
+			}
+		}
+		dot += enlace + ";" + enlace + "[dir=back];\n\t}"
+		actualF = actualF.siguiente
+	}
+
+	dot += "\n\tsubgraph rowHeader {"
+	enlace = "\n\t\tRoot -> "
+	actualF = nodo.accesoF.primero
+	for actualF != nil {
+		enlace += "F" + strconv.Itoa(actualF.indice)
+		actualF = actualF.siguiente
+		if actualF != nil {
+			enlace += " -> "
+		}
+	}
+	dot += enlace + ";" + enlace + "[dir=back];\n\t}"
+
+	actualC = nodo.accesoC.primero
+	for actualC != nil {
+		dot += "\n\tsubgraph column" + strconv.Itoa(actualC.indice) + " {"
+		enlace = "\n\t\tC" + strconv.Itoa(actualC.indice) + " -> "
+		actualF := actualC.acceso
+		for actualF != nil {
+			enlace += "N" + strconv.Itoa(actualF.fila) + "_" + strconv.Itoa(actualF.columna)
+			if actualF.abajo != nil {
+				actualF = actualF.abajo
+			} else {
+				break
+			}
+			if actualF != nil {
+				enlace += " -> "
+			}
+		}
+		dot += enlace + ";" + enlace + "[dir=back];\n\t}"
+		actualC = actualC.siguiente
+	}
+	dot += "\n}"
+
+	return dot
+}
+
+func generarGrafo(dot string) {
+	nombreArchivo := "grafo.dot"
+	nuevoContenido := dot
+
+	// Eliminar el archivo existente
+	err := os.Remove(nombreArchivo)
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("Error al eliminar el archivo:", err)
+		return
+	}
+
+	// Crear un nuevo archivo
+	file, err := os.Create(nombreArchivo)
+	if err != nil {
+		fmt.Println("Error al crear el archivo:", err)
+		return
+	}
+	defer file.Close()
+
+	// Escribir el nuevo contenido en el archivo
+	_, err = file.WriteString(nuevoContenido)
+	if err != nil {
+		fmt.Println("Error al escribir en el archivo:", err)
+		return
+	}
+
+	fmt.Println("Se ha escrito el nuevo contenido en el archivo.")
+}
+
 func main() {
 	matriz := MatrizDispersa{
 		accesoF: &ListaCabeza{},
@@ -188,7 +312,7 @@ func main() {
 	matriz.insertar(1, 2, 5)
 	matriz.insertar(1, 1, 5)
 
-	matriz.insertar(0, 0, 1)
+	/*matriz.insertar(0, 0, 1)
 	matriz.insertar(0, 2, 1)
 	matriz.insertar(0, 3, 1)
 
@@ -197,7 +321,8 @@ func main() {
 
 	matriz.insertar(2, 0, 1)
 	matriz.insertar(2, 1, 1)
-	matriz.insertar(2, 2, 1)
+	matriz.insertar(2, 2, 1)*/
 
 	matriz.imprimir()
+	generarGrafo(matriz.dot())
 }
