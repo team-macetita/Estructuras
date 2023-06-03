@@ -1,5 +1,5 @@
 digraph G {
 rankdir=LR;
 node[shape="box"];
-1 -> 2 -> 3 -> 4 -> null;
+Brandon -> Andy -> Jefferson -> null;
 }

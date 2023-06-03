@@ -3,11 +3,11 @@ package main
 import (
 	"fmt"
 	"os"
-	"strconv"
+	"paquetes/estudiante"
 )
 
 type Nodo struct {
-	valor     int
+	valor     *estudiante.Estudiante
 	siguiente *Nodo
 }
 
@@ -17,7 +17,7 @@ type ListaEnlazada struct {
 	longitud int
 }
 
-func (nodo *ListaEnlazada) insertar(valor int) {
+func (nodo *ListaEnlazada) insertar(valor *estudiante.Estudiante) {
 	if nodo.primero != nil {
 		nodo.ultimo.siguiente = &Nodo{valor: valor}
 		nodo.ultimo = nodo.ultimo.siguiente
@@ -29,17 +29,6 @@ func (nodo *ListaEnlazada) insertar(valor int) {
 	nodo.longitud += 1
 }
 
-// func (nodo *ListaEnlazada) recorrer() string {
-// 	actual := nodo.primero
-// 	lista := ""
-// 	for actual != nil {
-// 		lista += strconv.Itoa(actual.valor) + " -> "
-// 		actual = actual.siguiente
-// 	}
-// 	lista += "null"
-// 	return lista
-// }
-
 func (nodo *ListaEnlazada) dot() string {
 	dot := "digraph G {\n"
 	dot += "rankdir=LR;\n"
@@ -47,7 +36,7 @@ func (nodo *ListaEnlazada) dot() string {
 
 	actual := nodo.primero
 	for actual != nil {
-		dot += strconv.Itoa(actual.valor) + " -> "
+		dot += actual.valor.Nombre + " -> "
 		if actual.siguiente == nil {
 			dot += "null;\n"
 		}
@@ -90,9 +79,8 @@ func generarGrafo(dot string) {
 func main() {
 	fmt.Println("Lista Simple")
 	l1 := ListaEnlazada{}
-	l1.insertar(1)
-	l1.insertar(2)
-	l1.insertar(3)
-	l1.insertar(4)
+	l1.insertar(&estudiante.Estudiante{Nombre: "Brandon", Apellido: "Tejaxun"})
+	l1.insertar(&estudiante.Estudiante{Nombre: "Andy", Apellido: "Pichiya"})
+	l1.insertar(&estudiante.Estudiante{Nombre: "Jefferson", Apellido: "TP"})
 	generarGrafo(l1.dot())
 }
