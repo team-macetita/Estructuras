@@ -1,0 +1,8 @@
+digraph G {
+rankdir=LR;
+node[shape="box"];
+nodo1 [label="null"]
+nodo2 [label="null"]
+1 -> 2 -> 3 -> 4 -> nodo1;
+nodo2 -> 1 -> 2 -> 3 -> 4[dir="back"] ;
+}
