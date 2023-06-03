@@ -1,0 +1,16 @@
+digraph G {
+stack [shape=none, margin=0, label=<<TABLE BORDER="0" CELLBORDER="1" CELLSPACING="5" CELLPADDING="20">
+<tr>
+<td width="60" height="60"><font point-size="20">4</font></td>
+</tr>
+<tr>
+<td width="60" height="60"><font point-size="20">3</font></td>
+</tr>
+<tr>
+<td width="60" height="60"><font point-size="20">2</font></td>
+</tr>
+<tr>
+<td width="60" height="60"><font point-size="20">1</font></td>
+</tr>
+</TABLE>>];
+}

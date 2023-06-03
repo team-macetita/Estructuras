@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"strconv"
 )
 
@@ -33,14 +34,49 @@ func (nodo *Stack) pop() interface{} {
 	return nil
 }
 
-func (nodo *Stack) recorrer() string {
+func (nodo *Stack) dot() string {
+	dot := "digraph G {\nstack [shape=none, margin=0, label=<<TABLE BORDER=\"0\" CELLBORDER=\"1\" CELLSPACING=\"5\" CELLPADDING=\"20\">\n"
+
 	actual := nodo.ultimo
-	stack := ""
 	for actual != nil {
-		stack += " -> " + strconv.Itoa(actual.valor)
+		dot += "<tr>\n"
+		dot += "<td width=\"60\" height=\"60\"><font point-size=\"20\">" + strconv.Itoa(actual.valor) + "</font></td>\n"
+		dot += "</tr>\n"
 		actual = actual.anterior
 	}
-	return stack
+	dot += "</TABLE>>];\n"
+	dot += "}"
+
+	return dot
+}
+
+func generarGrafo(dot string) {
+	nombreArchivo := "grafo.dot"
+	nuevoContenido := dot
+
+	// Eliminar el archivo existente
+	err := os.Remove(nombreArchivo)
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("Error al eliminar el archivo:", err)
+		return
+	}
+
+	// Crear un nuevo archivo
+	file, err := os.Create(nombreArchivo)
+	if err != nil {
+		fmt.Println("Error al crear el archivo:", err)
+		return
+	}
+	defer file.Close()
+
+	// Escribir el nuevo contenido en el archivo
+	_, err = file.WriteString(nuevoContenido)
+	if err != nil {
+		fmt.Println("Error al escribir en el archivo:", err)
+		return
+	}
+
+	fmt.Println("Se ha escrito el nuevo contenido en el archivo.")
 }
 
 func main() {
@@ -49,9 +85,5 @@ func main() {
 	l1.insertar(2)
 	l1.insertar(3)
 	l1.insertar(4)
-	fmt.Println(l1.recorrer())
-
-	l1.pop()
-	l1.pop()
-	fmt.Println(l1.recorrer())
+	generarGrafo(l1.dot())
 }
