@@ -17,7 +17,7 @@ Una cola es una estructura de datos que sigue el principio de "primero en entrar
 Una matriz dispersa es una representación eficiente de una matriz en la que la mayoría de los elementos son ceros. En lugar de almacenar todos los elementos en una estructura de datos bidimensional, solo se almacenan los elementos distintos de cero junto con sus índices.
 
 ## **:six:** Árbol binario
-Un árbol binario es una estructura de datos jerárquica en la que cada nodo tiene como máximo dos hijos, denominados hijo izquierdo y hijo derecho. Cada nodo puede contener un valor y referencias a sus hijos.
+Un árbol binario es una estructura de datos jerárquica en la que cada nodo tiene como máximo dos hijos, denominados hijo izquierdo e hijo derecho. Cada nodo puede contener un valor y referencias a sus hijos.
 
 ## **:seven:** Árbol AVL
 Un árbol AVL es un tipo de árbol binario de búsqueda en el que la diferencia de altura entre los subárboles izquierdo y derecho de cada nodo está balanceada. Esto garantiza un tiempo de búsqueda eficiente. Cuando se insertan o eliminan nodos, el árbol se reestructura para mantener su balance.
