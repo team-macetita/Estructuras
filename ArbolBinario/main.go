@@ -43,20 +43,20 @@ func (node *Tree) dot() string {
 	return dot
 }
 
-func (node *Tree) dot1(node1 *Node) string {
+func (this *Tree) dot1(node1 *Node) string {
 	dot := ""
 	if node1.left == nil && node1.right == nil {
-		dot = "\n\tnode_" + strconv.Itoa(node1.number) + "[label=\"" + strconv.Itoa(node1.number) + "\"];"
+		dot = "\n\tnode_" + strconv.Itoa(node1.number) + "[label=\"<C3>" + strconv.Itoa(node1.number) + "\"];"
 	} else {
-		dot = "\n\tnode_" + strconv.Itoa(node1.number) + "[label=\"<C0> | " + strconv.Itoa(node1.number) + " | <C1>\"];"
+		dot = "\n\tnode_" + strconv.Itoa(node1.number) + "[label=\"<C0> | <C3>" + strconv.Itoa(node1.number) + " | <C1>\"];"
 	}
 	if node1.left != nil {
-		dot += node.dot1(node1.left)
-		dot += "\n\tnode_" + strconv.Itoa(node1.number) + ":C0 -> node_" + strconv.Itoa(node1.left.number) + ";"
+		dot += this.dot1(node1.left)
+		dot += "\n\tnode_" + strconv.Itoa(node1.number) + ":C0 -> node_" + strconv.Itoa(node1.left.number) + ":C3;"
 	}
 	if node1.right != nil {
-		dot += node.dot1(node1.right)
-		dot += "\n\tnode_" + strconv.Itoa(node1.number) + ":C1 -> node_" + strconv.Itoa(node1.right.number) + ";"
+		dot += this.dot1(node1.right)
+		dot += "\n\tnode_" + strconv.Itoa(node1.number) + ":C1 -> node_" + strconv.Itoa(node1.right.number) + ":C3;"
 	}
 	return dot
 }
@@ -140,6 +140,12 @@ func main() {
 	tree.insert(47)
 	tree.insert(95)
 	tree.insert(12)
+	tree.insert(49)
+	tree.insert(100)
+	tree.insert(200)
+	tree.insert(85)
+	tree.insert(210)
+	tree.insert(90)
 	generarGrafo(tree.dot())
 	fmt.Println("PREORDER")
 	tree.preorder()
