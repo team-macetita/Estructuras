@@ -1,0 +1,32 @@
+digraph Tree{
+	node [shape = record];
+	node_50[label="<C0> | <C3>50 | <C1>"];
+	node_26[label="<C0> | <C3>26 | <C1>"];
+	node_17[label="<C0> | <C3>17 | <C1>"];
+	node_12[label="<C3>12"];
+	node_17:C0 -> node_12:C3;
+	node_25[label="<C3>25"];
+	node_17:C1 -> node_25:C3;
+	node_26:C0 -> node_17:C3;
+	node_47[label="<C0> | <C3>47 | <C1>"];
+	node_32[label="<C3>32"];
+	node_47:C0 -> node_32:C3;
+	node_49[label="<C3>49"];
+	node_47:C1 -> node_49:C3;
+	node_26:C1 -> node_47:C3;
+	node_50:C0 -> node_26:C3;
+	node_95[label="<C0> | <C3>95 | <C1>"];
+	node_85[label="<C0> | <C3>85 | <C1>"];
+	node_84[label="<C3>84"];
+	node_85:C0 -> node_84:C3;
+	node_90[label="<C3>90"];
+	node_85:C1 -> node_90:C3;
+	node_95:C0 -> node_85:C3;
+	node_200[label="<C0> | <C3>200 | <C1>"];
+	node_100[label="<C3>100"];
+	node_200:C0 -> node_100:C3;
+	node_210[label="<C3>210"];
+	node_200:C1 -> node_210:C3;
+	node_95:C1 -> node_200:C3;
+	node_50:C1 -> node_95:C3;
+}
