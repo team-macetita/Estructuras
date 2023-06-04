@@ -2,7 +2,9 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
+	"os/exec"
 	"paquetes/estudiante"
 )
 
@@ -76,6 +78,25 @@ func generarGrafo(dot string) {
 	fmt.Println("Se ha escrito el nuevo contenido en el archivo.")
 }
 
+func generarImg() {
+	// Ruta del archivo .dot de entrada
+	inputFile := "grafo.dot"
+
+	// Ruta del archivo de imagen de salida
+	outputFile := "grafo.png"
+
+	// Comando para ejecutar Graphviz
+	cmd := exec.Command("dot", "-Tpng", "-o", outputFile, inputFile)
+
+	// Ejecutar el comando
+	err := cmd.Run()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("Archivo de imagen generado:", outputFile)
+}
+
 func main() {
 	fmt.Println("Lista Simple")
 	l1 := ListaEnlazada{}
@@ -83,4 +104,5 @@ func main() {
 	l1.insertar(&estudiante.Estudiante{Nombre: "Andy", Apellido: "Pichiya"})
 	l1.insertar(&estudiante.Estudiante{Nombre: "Jefferson", Apellido: "TP"})
 	generarGrafo(l1.dot())
+	generarImg()
 }
