@@ -10,22 +10,50 @@ class Nodo {
     }
 }
 
-class ListaEnlazada {
+class ListaSimple {
     Nodo primero;
     Nodo ultimo;
+    int longitud;
 
-    public ListaEnlazada() {
+    public ListaSimple() {
         primero = null;
         ultimo = null;
+        longitud = 0;
+    }
+
+    public void Insertar(int valor) {
+        if (this.primero != null) {
+            this.ultimo.siguiente = new Nodo(valor);
+            this.ultimo = this.ultimo.siguiente;
+            this.longitud += 1;
+            return;
+        }
+        this.primero = new Nodo(valor);
+        this.ultimo = this.primero;
+        this.longitud += 1;
+    }
+
+    public String recorrer () {
+        String lista = "";
+        Nodo actual = this.primero;
+        while (actual != null) {
+            lista += " -> " + actual.valor;
+            actual = actual.siguiente;
+        }
+        return lista;
     }
 }
 
 public class Main {
     public static void main(String[] args) {
-        // Aquí puedes escribir el código que se ejecutará cuando se ejecute el programa
-
-        // Por ejemplo, imprimir un mensaje en la consola
-        System.out.println("Hola, mundo!");
+        System.out.println("Lista Simple");
+        ListaSimple l1 = new ListaSimple();
+        l1.Insertar(1);
+        l1.Insertar(2);
+        l1.Insertar(2);
+        l1.Insertar(3);
+        l1.Insertar(4);
+        System.out.println(l1.recorrer());
     }
 
 }
