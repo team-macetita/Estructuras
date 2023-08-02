@@ -9,6 +9,9 @@ int main() {
     arbolBinario->insert(27);
     arbolBinario->insert(6);
     arbolBinario->insert(5);
+    std::cout << " --Preorder-- " << std::endl;
+    arbolBinario->preorder();
+    std::cout << " --Inorder-- " << std::endl;
     arbolBinario->inorder();
     return 0;
 }

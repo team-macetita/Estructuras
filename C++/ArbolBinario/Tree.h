@@ -6,10 +6,12 @@ struct Tree {
     Node *root;
     void insert(int number);
     void inorder();
+    void preorder();
 
     private:
     Node *insert(int number, Node *node);
     void inorder(Node *node1);
+    void preorder(Node *node1);
 };
 
 void Tree::insert(int number){
@@ -27,6 +29,17 @@ Node *Tree::insert(int number, Node *node){
         node->right = this->insert(number, node->right);
     }
     return node;
+}
+
+void Tree::preorder(){
+    this->preorder(this->root);
+    std::cout << "" << std::endl;
+}
+
+void Tree::preorder(Node *node1){
+    std::cout << node1->number << std::endl;
+    this->preorder(node1->left);
+    this->preorder(node1->right);
 }
 
 void Tree::inorder(){
