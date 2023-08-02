@@ -13,5 +13,7 @@ int main() {
     arbolBinario->preorder();
     std::cout << " --Inorder-- " << std::endl;
     arbolBinario->inorder();
+    std::cout << " --Postorder-- " << std::endl;
+    arbolBinario->postorder();
     return 0;
 }

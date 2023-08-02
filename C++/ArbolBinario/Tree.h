@@ -5,13 +5,15 @@
 struct Tree {
     Node *root;
     void insert(int number);
-    void inorder();
     void preorder();
+    void inorder();
+    void postorder();
 
     private:
     Node *insert(int number, Node *node);
-    void inorder(Node *node1);
     void preorder(Node *node1);
+    void inorder(Node *node1);
+    void postorder(Node *node1);
 };
 
 void Tree::insert(int number){
@@ -37,9 +39,11 @@ void Tree::preorder(){
 }
 
 void Tree::preorder(Node *node1){
-    std::cout << node1->number << std::endl;
-    this->preorder(node1->left);
-    this->preorder(node1->right);
+    if (node1 != nullptr){
+        std::cout << node1->number << std::endl;
+        this->preorder(node1->left);
+        this->preorder(node1->right);
+    }
 }
 
 void Tree::inorder(){
@@ -52,5 +56,18 @@ void Tree::inorder(Node *node1){
         this->inorder(node1->left);
         std::cout << node1->number << std::endl;
         this->inorder(node1->right);
+    }
+}
+
+void Tree::postorder(){
+    this->postorder(this->root);
+    std::cout << "" << std::endl;
+}
+
+void Tree::postorder(Node *node1){
+    if (node1 != nullptr){
+        this->postorder(node1->left);
+        this->postorder(node1->right);
+        std::cout << node1->number << std::endl;
     }
 }
